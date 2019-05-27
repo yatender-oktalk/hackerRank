@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -14,7 +14,7 @@ type Person struct {
 }
 
 func main() {
-	session, err := mgo.Dial("54.255.171.19")
+	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
 		panic(err)
 	}
