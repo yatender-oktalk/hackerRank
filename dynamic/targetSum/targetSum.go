@@ -3,60 +3,82 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
 	"strconv"
 	"strings"
 )
 
 // Complete the maxSubsetSum function below.
-func maxSubsetSum(arr []int32) int32 {
+// func maxSubsetSum(arr []int32) int32 {
 
-}
+// }
 
 func main() {
-	reader := bufio.NewReaderSize(os.Stdin, 1024*1024)
+	var totalNum = readNum()
+	var target = readNum()
 
-	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-	checkError(err)
+	reader := bufio.NewReader(os.Stdin)
+	text, _ := reader.ReadString('\n')
+	str := strings.TrimSpace(text)
+	result := strings.Split(str, " ")
 
-	defer stdout.Close()
+	var sum int
+	var currentHead int
+	var foundSum = -1
+	for i := 0; i < totalNum; i++ {
+		num, err2 := strconv.Atoi(result[i])
+		checkError(err2)
+		sum += num
 
-	writer := bufio.NewWriterSize(stdout, 1024*1024)
+		if sum == target {
+			foundSum = 1
+			fmt.Print("found sum at index ", currentHead, " to ", i)
+			break
+		}
 
-	nTemp, err := strconv.ParseInt(readLine(reader), 10, 64)
-	checkError(err)
-	n := int32(nTemp)
+		for sum > target {
+			fmt.Println("current Head ", currentHead)
+			fmt.Println("current sum ", sum)
+			headIndexVal, err := strconv.Atoi(result[currentHead])
+			checkError(err)
+			sum -= headIndexVal
+			currentHead++
+		}
 
-	arrTemp := strings.Split(readLine(reader), " ")
+		if sum == target {
+			foundSum = 1
+			fmt.Print("found sum at index ", currentHead, " to ", i)
+			break
+		}
 
-	var arr []int32
-
-	for i := 0; i < int(n); i++ {
-		arrItemTemp, err := strconv.ParseInt(arrTemp[i], 10, 64)
-		checkError(err)
-		arrItem := int32(arrItemTemp)
-		arr = append(arr, arrItem)
+	}
+	if foundSum == -1 {
+		fmt.Println("not found ")
 	}
 
-	res := maxSubsetSum(arr)
-
-	fmt.Fprintf(writer, "%d\n", res)
-
-	writer.Flush()
 }
 
-func readLine(reader *bufio.Reader) string {
-	str, _, err := reader.ReadLine()
-	if err == io.EOF {
-		return ""
-	}
+// func readLine(reader *bufio.Reader) string {
+// 	str, _, err := reader.ReadLine()
+// 	if err == io.EOF {
+// 		return ""
+// 	}
 
-	return strings.TrimRight(string(str), "\r\n")
-}
+// 	return strings.TrimRight(string(str), "\r\n")
+// }
 
 func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func readNum() int {
+	var totalNum int
+	fmt.Scan(&totalNum)
+	return totalNum
+}
+
+func isGreaterThanTarget(target, sum int) bool {
+	return sum > target
 }
