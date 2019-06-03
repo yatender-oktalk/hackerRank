@@ -30,15 +30,7 @@ func main() {
 		checkError(err2)
 		sum += num
 
-		if sum == target {
-			foundSum = 1
-			fmt.Print("found sum at index ", currentHead, " to ", i)
-			break
-		}
-
 		for sum > target {
-			fmt.Println("current Head ", currentHead)
-			fmt.Println("current sum ", sum)
 			headIndexVal, err := strconv.Atoi(result[currentHead])
 			checkError(err)
 			sum -= headIndexVal
