@@ -1,27 +1,27 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
-	str := reader()
-	numList := getNumList(str)
-	printList(insertionSort(numList))
+	var N int
+	fmt.Println("Input total number count")
+	scan(&N)
+	s := make([]int, N)
+	for i := range s {
+		scan(&s[i])
+	}
+	printList(insertionSort(s))
 }
 
 func printList(numList []int) {
 	for _, val := range numList {
-		fmt.Print(val)
+		fmt.Print(" ", val)
 	}
 }
 
 func insertionSort(numList []int) []int {
-
 	for i := 1; i < len(numList); i++ {
 		key := numList[i]
 		j := i - 1
@@ -35,23 +35,8 @@ func insertionSort(numList []int) []int {
 	return numList
 }
 
-func getNumList(strNumList string) []int {
-	t := strings.Split(strNumList, " ")
-	var t2 = []int{}
-
-	for _, i := range t {
-		j, err := strconv.Atoi(i)
-		if err != nil {
-			panic(err)
-		}
-		t2 = append(t2, j)
+func scan(a ...interface{}) {
+	if _, err := fmt.Scan(a...); err != nil {
+		panic(err)
 	}
-	return t2
-}
-
-func reader() string {
-	reader := bufio.NewReader(os.Stdin)
-	text, _ := reader.ReadString('\n')
-	str := strings.TrimSpace(text)
-	return str
 }
