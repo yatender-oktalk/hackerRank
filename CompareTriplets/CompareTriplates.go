@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
-	"os"
-	"strings"
 	"fmt"
+	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -18,13 +18,12 @@ func main() {
 	s2 := strings.TrimSpace(text2)
 	bobList := strings.Split(s2, " ")
 
-
 	aliceS := 0
-	bobS:= 0
+	bobS := 0
 
-	if len(aliceList) != len(bobList){
+	if len(aliceList) != len(bobList) {
 		fmt.Println("errror")
-	}else{
+	} else {
 		for i := range bobList {
 
 			aliceNum, err := strconv.Atoi(aliceList[i])
@@ -37,21 +36,17 @@ func main() {
 			if aliceNum > bobNum {
 				//fmt.Println("with alics ")
 				aliceS = aliceS + 1
-			}else if aliceNum < bobNum {
+			} else if aliceNum < bobNum {
 				//fmt.Println("with  bob")
 				bobS = bobS + 1
-			}else {
+			} else {
 				//fmt.Println("in else")
 			}
 		}
 
+		fmt.Print(aliceS, " ")
 
-			fmt.Print(aliceS," ")
-
-
-
-			fmt.Print(bobS)
-
+		fmt.Print(bobS)
 
 	}
 }
