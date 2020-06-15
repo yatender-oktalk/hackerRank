@@ -8,8 +8,12 @@ type user struct {
 }
 
 type admin struct {
-	person user
-	level  string
+	name  string
+	email string
+}
+ 
+type notifier interface {
+	notify()
 }
 
 // value receiver method
@@ -18,7 +22,13 @@ func (u user) notify() {
 }
 
 func (u admin) notify() {
-	fmt.Printf("Sending admin email to %s <%s>\n", u.person.name, u.person.email)
+	fmt.Printf("Sending admin email to %s <%s>\n", u.name, u.email)
+}
+
+// notifier
+
+func sendNotification(n notifier) {
+	n.notify()
 }
 
 // value receiver method
@@ -27,15 +37,22 @@ func (u *user) changeEmail(email string) {
 	u.email = email
 }
 
+func (u *admin) changeEmail(email string) {
+	fmt.Printf("changing user email to %s\n", email)
+	u.email = email
+}
+
 func main() {
-	lisa := &user{"lisa","lisa@gmail.com"}
+	lisa := user{"lisa","lisa@gmail.com"}
 	lisa.notify()
 	lisa.changeEmail("newlisa@gmail.com")
-	lisa.notify()
+	
+
+	sendNotification(lisa)
 
 
-	bill := user{"bill", "bill@gmail.com"}
+	bill := admin{"bill", "bill@gmail.com"}
 	bill.notify()
 	bill.changeEmail("newbill@gmail.com")
-	bill.notify()
+	sendNotification(bill)
 }
