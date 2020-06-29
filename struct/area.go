@@ -11,14 +11,13 @@ type square struct {
 }
 
 type rectangle struct {
-	width float32
+	width  float32
 	length float32
 }
 
 type areable interface {
 	area() float32
 }
-
 
 func (c circle) area() float32 {
 	return 3.14 * c.radius * c.radius
@@ -40,7 +39,7 @@ func calculateArea(a areable) {
 func main() {
 	cir := circle{3.5}
 	calculateArea(cir)
-	
+
 	sq := &square{5.0}
 	calculateArea(sq)
 
